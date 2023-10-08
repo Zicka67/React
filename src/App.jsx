@@ -23,7 +23,7 @@ function App() {
             {/* {showTitle && <h1 onClick={handleClick} id='title' className='title' style={style}>{title}</h1>} */}
             {/* OU */}
             {/* <Title/> Pour afficher le contenu de la function Title */}
-            <Title color="blue" />
+            <Title color="blue" /*hidden*/ id="monid" className="demo" data-demo="demo"> Children </Title>
             <input type="text" />
 
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus fuga vel debitis molestias voluptates 
@@ -37,8 +37,19 @@ function App() {
           </>
 }
 
-function Title ({color}) {
-  return <h1 style={{color : color}}>Bonjour les gens</h1>
+function Title ({color, hidden, children, ...props}) {
+  if (hidden) {
+    return null
+  }
+
+  // Pour donner une classe et un id a un composant
+  // const props = {
+  //   id: "monid",
+  //   className: "maclass"
+  // }
+
+  // {...props} pour donner les attributs de la const props au h1
+  return <h1 style={{color : color}} {...props}> Bonjour les gens { children }</h1>
 }
 
 export default App
