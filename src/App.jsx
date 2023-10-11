@@ -1,55 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState} from "react"
 
-const title = "Bonjour Davina"
-const style = {color : "red"}
-const showTitle = true
-const todos = [
-  'Presenter react',
-  'Presenter JSX',
-  'Créer des composants',
-]
 
 function App() {
+  //hook useStat uniquement a l'intérieur des composants
+  //Tab de 2 elems, le premier est la valeur, et le 2 ieme un setter pour changer la valeur
+  const [count, setCount] = useState (0)
 
-  const handleClick = (e) => {
-    console.log(e)
-      alert("J'ai cliqué sur le titre")
+  // console.log('render')
+
+  const increment = () => {
+    setCount((count) => count + 1)
   }
+
+  const decrement = () => {
+    if ( count > 0) {
+    setCount((count) => count - 1)
+  } else {
+    
+  }
+
+}  
+
+  // Pour un objet
+  const [person, setPerson] = useState ({
+    firstname : 'John',
+    lastname : 'Doe',
+    age : 18
+  })
+
+  {/* Compteur */}
+  const incrementAge = () => {
+    setPerson({...person, age: person.age + 1 })
+  }
+
+  const decrementAge = () => {
+    if ( person.age > 0) {
+    setPerson({...person, age: person.age - 1 })
+    } else {
+
+    }
+  }
+
+  {/* Form */}
+  const [value, setValue] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(new FormData(e.target))
+  }
+
+  const handleChange = (e) => {
+    setValue(e.target.value)
+  }
+
+  const [checked, setChecked] = useState(true)
+  const toggleCheck = () => {
+    setChecked(!checked)
+  }
+
+  {/* CGU */}
+
+  const [isTermAccepted, setIsTermAccepted] = useState(false)
+
+
+  return  <> 
+    <p>Hello !</p>
+
+    {/* Compteur */}
+
+    <p>Compteur : {count}</p>
+      <button onClick={increment}>Incrémenter</button>
+      <button onClick={decrement}>Décrémente</button>
+
+    <p>Age de {person.firstname} : {person.age}</p> 
+      <button onClick={incrementAge}>Augmenter</button>
+      <button onClick={decrementAge}>Réduire</button>
+
+      {/* Form */}
+    
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="firstname" defaultValue={person.firstname}/>
+        <textarea value={value} onChange={handleChange} name="message" id="message" cols="30" rows="10"></textarea>
+        <input type="checkbox" checked={checked} onChange={toggleCheck} />
+        <button disabled={!checked}>Envoyer</button>
+      </form>
+
+      {/* CGU */}
+
+      <form action="">
+        <CGUCheckbox checked={isTermAccepted} onCheck={setIsTermAccepted}/>
+        <button disabled={!isTermAccepted}>Envoyer le formulaire</button>
+      </form>
   
-  return  <>  
-            {/* {showTitle && suivie de ce qu'on veut afficher, si showTitle est tru ca l'affiche, false cache */}
-            {/* {showTitle && <h1 onClick={handleClick} id='title' className='title' style={style}>{title}</h1>} */}
-            {/* OU */}
-            {/* <Title/> Pour afficher le contenu de la function Title */}
-            <Title color="blue" /*hidden*/ id="monid" className="demo" data-demo="demo"> Children </Title>
-            <input type="text" />
+    </>
 
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus fuga vel debitis molestias voluptates 
-              temporibus enim sapiente? Impedit nihil tempora maiores deleniti ut et, sint debitis minima, id odio natus?
-            </p>
-
-            <ul>
-              {todos.map (todo => (<li key={todo}>{todo}</li>))}
-            </ul>
-
-          </>
 }
 
-function Title ({color, hidden, children, ...props}) {
-  if (hidden) {
-    return null
-  }
-
-  // Pour donner une classe et un id a un composant
-  // const props = {
-  //   id: "monid",
-  //   className: "maclass"
-  // }
-
-  // {...props} pour donner les attributs de la const props au h1
-  return <h1 style={{color : color}} {...props}> Bonjour les gens { children }</h1>
+function CGUCheckbox ({checked, onCheck}) {
+  return <div>
+    <label>
+      <input type="checkbox" 
+        onChange={(e) => onCheck(e.target.checked)}/>
+      Accepter les conditions d'utilisation
+    </label>
+  </div>
 }
+
 
 export default App
