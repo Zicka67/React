@@ -1,20 +1,10 @@
-import React, { useState } from 'react';
-import App from './App.jsx';
-import App2 from './App2.jsx';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+// import App2 from './App2';
 
-function MainApp() {
-  const [view, setView] = useState('App');
-
-  const switchView = () => {
-    setView((prevView) => (prevView === 'App' ? 'App2' : 'App'));
-  };
-
-  return (
-    <div>
-      <button onClick={switchView}>Changer de Vue</button>
-      {view === 'App' ? <App /> : <App2 />}
-    </div>
-  );
-}
-
-export default MainApp;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
